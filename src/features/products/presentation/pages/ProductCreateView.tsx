@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import ProductForm from "../components/ProductForm";
-import { ProductFormViewModel } from "../viewmodels/ProductFormViewModel";
+import ProductForm from "../components/ProductForm.tsx";
+import { ProductFormViewModel } from "../viewmodels/ProductFormViewModel.ts";
 
 const ProductCreateView = () => {
     const viewModel = new ProductFormViewModel();

@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
-import ProductList from "../components/ProductList";
-import { ProductListViewModel } from "../viewmodels/ProductListViewModel";
+import ProductList from "../components/ProductList.tsx";
+import { ProductListViewModel } from "../viewmodels/ProductListViewModel.ts";
+import { useEffect } from "react";
 
 const ProductListView = () => {
-    const viewModel = new ProductListViewModel();
+    // Usamos la instancia singleton
+    const viewModel = ProductListViewModel.getInstance();
+
+    useEffect(() => {
+        // Solo carga si no hay datos o si se ha marcado como no cargados
+        if (!viewModel.dataLoaded && !viewModel.loading) {
+            viewModel.loadProducts();
+            viewModel.loadUsers();
+        }
+    }, [viewModel]);
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">

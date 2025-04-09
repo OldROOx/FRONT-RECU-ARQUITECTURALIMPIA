@@ -12,11 +12,15 @@ const ProductForm = observer(({ viewModel, productId }: Props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        viewModel.reset();
-        viewModel.loadUsers();
-        if (productId) {
-            viewModel.loadProduct(productId);
-        }
+        const initForm = async () => {
+            viewModel.reset();
+            await viewModel.loadUsers();
+            if (productId) {
+                await viewModel.loadProduct(productId);
+            }
+        };
+
+        initForm();
     }, [viewModel, productId]);
 
     useEffect(() => {
@@ -25,9 +29,9 @@ const ProductForm = observer(({ viewModel, productId }: Props) => {
         }
     }, [viewModel.success, navigate]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        viewModel.saveProduct();
+        await viewModel.saveProduct();
     };
 
     return (

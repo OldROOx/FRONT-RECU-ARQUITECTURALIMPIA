@@ -1,15 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
 
-import {navigationWrapper} from "./core/navigation/NavegationWrapper.tsx";
-
-const rootElement = document.getElementById('root');
-if (rootElement) {
-    createRoot(rootElement).render(
-        <StrictMode>
-            <RouterProvider router={navigationWrapper} />
-        </StrictMode>
-    );
-}
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);

@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import UserList from "../components/UserList";
-import { UserListViewModel } from "../viewmodels/UserListViewModel";
+import UserList from "../components/UserList.tsx";
+import { UserListViewModel } from "../viewmodels/UserListViewModel.ts";
 
 const UserListView = () => {
-    const viewModel = new UserListViewModel();
+
+    const viewModel = UserListViewModel.getInstance();
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">

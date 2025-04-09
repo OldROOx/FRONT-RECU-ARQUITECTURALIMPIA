@@ -4,6 +4,7 @@ import { UserDTO } from "../../data/models/UserDTO";
 import { CreateUserUseCase } from "../../domain/CreateUserUseCase";
 import { UpdateUserUseCase } from "../../domain/UpdateUserUseCase";
 import { GetUserByIdUseCase } from "../../domain/GetUserByIdUseCase";
+import { UserListViewModel } from "./UserListViewModel";
 
 export class UserFormViewModel {
     id: number | null = null;
@@ -16,12 +17,14 @@ export class UserFormViewModel {
     private createUserUseCase: CreateUserUseCase;
     private updateUserUseCase: UpdateUserUseCase;
     private getUserByIdUseCase: GetUserByIdUseCase;
+    private userListViewModel: UserListViewModel;
 
     constructor() {
         makeAutoObservable(this);
         this.createUserUseCase = new CreateUserUseCase();
         this.updateUserUseCase = new UpdateUserUseCase();
         this.getUserByIdUseCase = new GetUserByIdUseCase();
+        this.userListViewModel = UserListViewModel.getInstance();
     }
 
     reset() {
@@ -72,11 +75,15 @@ export class UserFormViewModel {
             let savedUser: UserDTO;
 
             if (this.id === null) {
-                // Create new user
+
                 savedUser = await this.createUserUseCase.execute(user);
+
+                this.userListViewModel.addUserLocally(savedUser);
             } else {
-                // Update existing user
+
                 savedUser = await this.updateUserUseCase.execute(this.id, user);
+
+                this.userListViewModel.updateUserLocally(savedUser);
             }
 
             runInAction(() => {

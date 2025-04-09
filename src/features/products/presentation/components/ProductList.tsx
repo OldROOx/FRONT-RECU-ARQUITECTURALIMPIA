@@ -9,8 +9,8 @@ type Props = {
 
 const ProductList = observer(({ viewModel }: Props) => {
     useEffect(() => {
-        viewModel.loadProducts();
-        viewModel.loadUsers();
+
+        viewModel.loadInitialData();
     }, [viewModel]);
 
     const handleUserFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -18,9 +18,8 @@ const ProductList = observer(({ viewModel }: Props) => {
         viewModel.setSelectedUserId(value === "all" ? null : parseInt(value));
     };
 
-    if (viewModel.loading) {
-        return <div className="text-center py-4">Cargando productos...</div>;
-    }
+
+    const showLoadingSpinner = viewModel.loading && viewModel.products.length === 0;
 
     if (viewModel.error) {
         return <div className="text-red-500 py-4">{viewModel.error}</div>;
@@ -46,7 +45,9 @@ const ProductList = observer(({ viewModel }: Props) => {
                 </div>
             </div>
 
-            {viewModel.products.length === 0 ? (
+            {showLoadingSpinner ? (
+                <div className="text-center py-4">Cargando productos...</div>
+            ) : viewModel.products.length === 0 ? (
                 <div className="text-center py-8">
                     <p className="text-gray-500">No hay productos disponibles</p>
                 </div>
